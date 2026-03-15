@@ -11,7 +11,7 @@ typedef struct {
     float salario;
 } Funcionario;
 
-// Cadastro de Funcionários
+// Employee registration
 void cadastrar(Funcionario func[], int *n) {
     printf("Nome: ");
     scanf(" %[^\n]", func[*n].nome);
@@ -24,7 +24,7 @@ void cadastrar(Funcionario func[], int *n) {
     (*n)++;
 }
 
-// Busca de Funcionário
+// Employee search
 void buscar(Funcionario func[], int n) {
     char nomeBusca[50];
     printf("Nome a buscar: ");
