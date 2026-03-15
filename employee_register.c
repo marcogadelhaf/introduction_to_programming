@@ -60,3 +60,12 @@ int main() {
     
     return 0;
 }
+
+// if struct array: Funcionario funcionarios[100];
+// if read name with spacebar (\n): scanf(" %[^\n]", funcionarios[i].nome);
+// if search of a name: if(strcmp(funcionarios[i].nome, nomeBusca) == 0) {}
+    // found
+// control of number of registered employees: int contador = 0; // global or main
+    // when registering;
+    //funcionario[contador] = dados;
+    //contador ++;
