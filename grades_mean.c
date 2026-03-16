@@ -24,7 +24,7 @@ int main()
 
         qtd++;
 
-        if(qtd < 50) {  // só pergunta se ainda pode continuar
+        if(qtd < 50) {
             printf("Continuar? (s/n): ");
             scanf(" %c", &resp);
         } else {
