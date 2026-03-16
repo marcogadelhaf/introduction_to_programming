@@ -1,75 +1,75 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX 50
-
-// student struct
-typedef struct {
+typedef struct
+{
     char nome[50];
     float n1, n2;
-} Aluno;
+} taluno;
 
-// mean calculator function
-float mediaAluno(Aluno a) {
-    return (a.n1 + a.n2) / 2;
-}
+int main()
+{
+    taluno turma[50];
+    int qtd = 0;
+    char resp;
 
-int main() {
-    Aluno alunos[MAX];
-    int n, i;
-    float somaMedias = 0, mediaClasse;
-    int aprovados = 0, reprovados = 0;
-    
-    // get data from keyboard
-    printf("Quantos alunos? ");
-    scanf("%d", &n);
-    
-    for(i = 0; i < n; i++) {
-        printf("\nAluno %d:\n", i+1);
+    do
+    {
         printf("Nome: ");
-        scanf(" %[^\n]", alunos[i].nome);
+        scanf(" %[^\n]", turma[qtd].nome);
         printf("Nota 1: ");
-        scanf("%f", &alunos[i].n1);
+        scanf("%f", &turma[qtd].n1);
         printf("Nota 2: ");
-        scanf("%f", &alunos[i].n2);
-    }
-    
-    // calculate statistics
-    for(i = 0; i < n; i++) {
-        float media = mediaAluno(alunos[i]);
-        somaMedias += media;
-        
-        if(media >= 6.0)
-            aprovados++;
+        scanf("%f", &turma[qtd].n2);
+
+        qtd++;
+
+        if(qtd < 50) {  // só pergunta se ainda pode continuar
+            printf("Continuar? (s/n): ");
+            scanf(" %c", &resp);
+        } else {
+            printf("Limite de alunos atingido!\n");
+            resp = 'n'; 
+        }
+    } while(resp == 's' && qtd <= 50);
+
+    float soma = 0, media;
+    int aprov = 0, reprov = 0;
+
+    for(int i = 0 ; i < qtd ; i++)
+    {
+        media = (turma[i].n1 + turma[i].n2) / 2;
+        soma += media;
+
+        if(media >= 7)
+        {
+            aprov++;
+        }
         else
-            reprovados++;
+        {
+            reprov++;
+        }
     }
-    
-    mediaClasse = somaMedias / n;
-    
-    // report as file
+
+    float mediaTurma = soma / qtd;
+    float porcentAprov = (float)aprov / qtd * 100;
+
     FILE *arq = fopen("relatorio.txt", "w");
-    
-    fprintf(arq, "=== RELATORIO DA CLASSE ===\n");
-    fprintf(arq, "Media da classe: %.2f\n", mediaClasse);
-    fprintf(arq, "Aprovados: %d\n", aprovados);
-    fprintf(arq, "Reprovados: %d\n", reprovados);
-    fprintf(arq, "Porcentagem de aprovados: %.1f%%\n", 
-            (float)aprovados / n * 100);
-    
-    fclose(arq);
-    
-    // student's data files
-    FILE *arq2 = fopen("dados_alunos.txt", "w");
-    
-    for(i = 0; i < n; i++) {
-        fprintf(arq2, "%s, %.1f, %.1f\n", 
-                alunos[i].nome, alunos[i].n1, alunos[i].n2);
+
+    if(arq == NULL) {  
+        printf("Erro ao criar arquivo!\n");
+        return 1;
     }
-    
-    fclose(arq2);
-    
-    printf("\nRelatorio gerado com sucesso!\n");
-    
+
+    fprintf(arq, "===== RELATÓRIO =====\n");
+    fprintf(arq, "Média da Turma: %.2f\n", mediaTurma);
+    fprintf(arq, "Aprovados: %d\n", aprov);
+    fprintf(arq, "Reprovados: %d\n", reprov);
+    fprintf(arq, "Porcentagem de Aprovação: %.2f%%\n", porcentAprov);
+
+    fclose(arq);
+
+    printf("\nArquivo 'relatorio.txt' criado com sucesso...\n");
+
     return 0;
 }
